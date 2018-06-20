@@ -1,22 +1,39 @@
 from slackclient import SlackClient
 from pprint import pprint
 import argparse
+from config import userToken
 
-# args
+# CLI argument parser, data, and options
 parser = argparse.ArgumentParser()
 # parser.add_argument("action", help="Action to execute")
-parser.add_argument("user", help = "User to target")
-parser.add_argument("message", help = "Message to send")
+parser.add_argument("action", help = "message, fetch, disp, fav")
+parser.add_argument("target", help = "MESSAGE: group, user, \n DISPLAY: channels, im, groups, unreads, recent \n FAVORITES: display, add, remove, [name of favorite]\n SETUP")
 
 args = parser.parse_args()
-message = args.message
+message = args.target
 
-# user token
-token = 'xoxp-322488135875-322034850833-381991675365-bc90aa8f4ef622b2fee8ad5220b82ddf'
+# Token Management
+token = userToken
+
+# Initialize slack API with token
 sc = SlackClient(token)
 
-# users
-def fetchUserNames():
+def casualToName(name):
+    userList = {
+        'will': 'will.kasten',
+        'anton': 'ajsurunis',
+        'ivan': 'ivanmccarter',
+        'jess': 'jstothers220',
+        'jamil': 'jvalliswalker',
+        'michaela': 'michaelamstewart17',
+        'suz': 'suzmokie',
+        'rees': 'riscblanchard',
+        'bozek': 'sambozek'
+    }
+    return userList[name]
+
+# Fetch - User Names
+def getUserNames():
     users = sc.api_call("users.list", token=token)
     members = users['members']
 
@@ -33,40 +50,7 @@ def fetchUserNames():
 
     return userList
 
-def shortNameToName(name):
-    userList = {
-        'will': 'will.kasten',
-        'anton': 'ajsurunis',
-        'ivan': 'ivanmccarter',
-        'jess': 'jstothers220',
-        'jamil': 'jvalliswalker',
-        'michaela': 'michaelamstewart17',
-        'suz': 'suzmokie',
-        'rees': 'riscblanchard',
-        'bozek': 'sambozek'
-    }
-    return userList[name]
-
-# channels
-def fetchChannelName(channelId):
-    channelInfo = sc.api_call("channels.info", channel=channelId)
-    channel = channelInfo['channel']
-    name = channel['name']
-    return name
-
-# messages
-def sendInstant(channel, message):
-    sc.api_call("chat.postMessage", as_user="true", channel=channel, text=message)
-
-def sendInstantTo(name, message):
-    userId = fetchUserNames()[name]
-
-    # if no channel exists, open new channel. Store channel info
-    imOpenResult = sc.api_call("im.open", user=userId)
-    channel = imOpenResult['channel']['id']
-
-    # send message to channel
-    sendInstant(channel, message)
+# Fetch - Channels
 
 def getChannels():
     channels = sc.api_call("channels.list")
@@ -80,18 +64,68 @@ def getChannels():
         results[name] = id
 
     return results
-
+def getChannelName(channelId):
+    channelInfo = sc.api_call("channels.info", channel=channelId)
+    channel = channelInfo['channel']
+    name = channel['name']
+    return name
 def getChannelHistory(channel):
     history = sc.api_call("channels.history", channel=channel)
     return history
 
+# Fetch - Groups
+
+def getGroups():
+
+    # *** add *** group list object structure
+
+    groupsList = sc.api_call("groups.list")
+    groups = groupsList["groups"]
+
+    results = {}
+
+    for group in groups:
+        name = group['name'] #
+        # if is direct message group
+        if name[0:3] == 'mdpm':
+            print('mpdm')
+            continue
+
+        id = group['id']
+        results[name] = id
+
+    return results
+def getGroupDirects():
+    groupsList = sc.api_call("groups.list")
+    groups = groupsList["groups"]
+
+    results = {}
+
+    for group in groups:
+        name = group['name'] #
+        # if is direct message group
+        if name[0:3] == 'mdpm':
+            print('mpdm')
+            id = group['id']
+            results[name] = id
+
+    return results
+
+# Print - Channels
+def printChannels():
+    print ('\n')
+    print('<(*.*<)   Channels (public)  (>*.*)>\n')
+
+    channelsList = getChannels()
+    for keys in channelsList:
+        print(keys)
 def printChannelHistory(channel):
 
     print("*~.~*~.~*~.~*~.~*~.~*")
-    print("    " + fetchChannelName(channel))
+    print("    " + getChannelName(channel))
     print("*~.~*~.~*~.~*~.~*~.~*")
 
-    names = fetchUserNames()
+    names = getUserNames()
     history = getChannelHistory(channel)
     messages = history['messages']
     nameSize = 14
@@ -108,9 +142,49 @@ def printChannelHistory(channel):
             userName = userName[0:nameSize - 1]
         if len(userName) < nameSize:
             userName = userName + ((nameSize - len(userName)) * " ")
-        print(userName + ":      " + text)
+            print(userName + ":      " + text)
 
-printChannelHistory("CAWMBKPQT")
+# Print - Groups
+
+def printGroups():
+    print ('\n')
+    print('<(*.*<)   Groups (private)   (>*.*)>\n')
+
+    channelsList = getGroups()
+    for keys in channelsList:
+        if keys[0:4] != "mpdm":
+            print(keys)
+
+    print ('\n')
+    print('<(*.*<)   Directs (private)  (>*.*)>\n')
+
+    channelsList = getGroups()
+    for keys in channelsList:
+        if keys[0:4] == "mpdm":
+            keys = keys[5:]
+            print(keys)
+
+    print ('\n')
+
+# messages
+def sendInstant(channel, message):
+    # send message (as user) to target ()
+    sc.api_call("chat.postMessage", as_user="true", channel=channel, text=message)
+def sendInstantTo(name, message):
+    userId = getUserNames()[name]
+
+    # if no channel exists, open new channel. Store channel info
+    imOpenResult = sc.api_call("im.open", user=userId)
+    channel = imOpenResult['channel']['id']
+
+    # send message to channel
+    sendInstant(channel, message)
+
+printChannels()
+printGroups()
+
+# pprint(getChannels())
+# printChannelHistory("CAWMBKPQT")
 
 
 # getChannels()
@@ -119,7 +193,7 @@ printChannelHistory("CAWMBKPQT")
 
 # Is known user?
 # try:
-#     name = shortNameToName(args.user)
+#     name = casualToName(args.user)
 # except KeyError:
 #     print("Y(*o*)Y   Undefined User   Y(*o*)Y")
 #

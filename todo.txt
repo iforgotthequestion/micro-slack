@@ -1,0 +1,43 @@
+-- Combine group directs with single directs and format
+
+-- write unreads functions
+-- write recents functions
+-- write favorites functions
+
+-- Combine "casual" and favorites (nickname option when added to favorites)
+
+-- Store token in tokens.txt
+
+
+-- Arguments:  (action) (target)
+	message (ms)
+		group
+		-display "Messaging {group}:" User input message
+		user (im)
+	display (dis)
+		channels
+		IMs
+		groups
+		unreads
+		recent
+	favorites (fav)
+		display (dis)
+			-list contents of favorites, message by selecting #
+
+		add
+			-display lists of users, channels, groups, choose with #,
+			-user selects, is added to favorites list (assign by conversation ID)
+
+		remove (rm)
+			-show favorites list and choose by #
+			-confirm
+	setup
+		update
+		install
+		uninstall
+
+
+
+	*** Nice to haves***
+
+	"Last" feature

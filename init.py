@@ -12,7 +12,7 @@ parser.add_argument("target", help = "MESSAGE: group, user, \n DISPLAY: channels
 args = parser.parse_args()
 message = args.target
 
-# Token Management
+# import token(s) from userToken.py
 token = userToken
 
 # Initialize slack API with token

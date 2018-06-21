@@ -14,23 +14,10 @@ message = args.target
 
 # Token Management
 token = userToken
+#other token types to be added
 
-# Initialize slack API with token
+# Initialize slack API with token from config.py
 sc = SlackClient(token)
-
-def casualToName(name):
-    userList = {
-        'will': 'will.kasten',
-        'anton': 'ajsurunis',
-        'ivan': 'ivanmccarter',
-        'jess': 'jstothers220',
-        'jamil': 'jvalliswalker',
-        'michaela': 'michaelamstewart17',
-        'suz': 'suzmokie',
-        'rees': 'riscblanchard',
-        'bozek': 'sambozek'
-    }
-    return userList[name]
 
 # Fetch - User Names
 def getUserNames():

@@ -1,6 +1,7 @@
 -- Combine group directs with single directs and format
 
 -- Setup script:
+		add user confirmation and explanation (will install modules via pip)
 		exception handling
 
 -- write unreads functions

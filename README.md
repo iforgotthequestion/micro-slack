@@ -2,7 +2,8 @@ See todo.txt for outstanding work
 
 **Python 3.6 - Linux/OSX**
 
-Install Dependencies:
+Setup:
 
-Navigate to directory microslack is installed in and run
-> python3 init.py setup new
+In a terminal, run:
+
+`alias slack="python3 path/to/microslack/init.py"`

@@ -1,6 +1,7 @@
 from slackclient import SlackClient
-from pprint import pprint
+from pprint import pprint # remove once built
 import argparse
+import os
 from config import userToken
 
 # CLI argument parser, data, and options
@@ -10,7 +11,8 @@ parser.add_argument("action", help = "message (m), display (d), favorites (f), s
 parser.add_argument("target", help = "MESSAGE: group, user, DISPLAY: channels, im, groups, unreads, recent FAVORITES: display, add, remove, [id of favorite], SETUP")
 
 args = parser.parse_args()
-message = args.target
+action = args.action
+target = args.target
 
 # import token(s) from userToken.py
 token = userToken
@@ -19,7 +21,7 @@ token = userToken
 # Initialize slack API with token from config.py
 sc = SlackClient(token)
 
-# Fetch - User Names
+
 def getUserNames():
     users = sc.api_call("users.list", token=token)
     members = users['members']
@@ -36,8 +38,6 @@ def getUserNames():
         i += 1
 
     return userList
-
-# Fetch - Channels
 
 def getChannels():
     channels = sc.api_call("channels.list")
@@ -59,9 +59,6 @@ def getChannelName(channelId):
 def getChannelHistory(channel):
     history = sc.api_call("channels.history", channel=channel)
     return history
-
-# Fetch - Groups
-
 def getGroups():
 
     # *** add *** group list object structure
@@ -98,7 +95,6 @@ def getGroupDirects():
 
     return results
 
-# Print - Channels
 def printChannels():
     print ('\n')
     print('<(*.*<)   Channels (public)  (>*.*)>\n')
@@ -130,9 +126,6 @@ def printChannelHistory(channel):
         if len(userName) < nameSize:
             userName = userName + ((nameSize - len(userName)) * " ")
             print(userName + ":      " + text)
-
-# Print - Groups
-
 def printGroups():
     print ('\n')
     print('<(*.*<)   Groups (private)   (>*.*)>\n')
@@ -153,7 +146,6 @@ def printGroups():
 
     print ('\n')
 
-# messages
 def sendInstant(channel, message):
     # send message (as user) to target ()
     sc.api_call("chat.postMessage", as_user="true", channel=channel, text=message)
@@ -170,12 +162,10 @@ def sendInstantTo(name, message):
 printChannels()
 printGroups()
 
+if action == "install" and target == "new":
+    os.system('sh setup.sh')
 
 # printChannelHistory("CAWMBKPQT")
-
-
-
-##### Body
 
 # Is known user?
 # try:

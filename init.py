@@ -7,8 +7,8 @@ from config import userToken
 # CLI argument parser, data, and options
 parser = argparse.ArgumentParser()
 # parser.add_argument("action", help="Action to execute")
-parser.add_argument("action", help = "message (m), display (d), favorites (f), install (install)")
-parser.add_argument("target", help = "MESSAGE: group, user, DISPLAY: channels, im, groups, unreads, recent FAVORITES: display, add, remove, [id of favorite], INSTALL: new, token")
+parser.add_argument("action", help = "message (m), list (l), favorites (f), install")
+parser.add_argument("target", help = "MESSAGE: group (g), user (u), DISPLAY: channels, im, groups, recent FAVORITES: list, add, remove, [id of favorite], INSTALL: new, token")
 
 args = parser.parse_args()
 action = args.action
@@ -26,10 +26,16 @@ if action == "install":
     if target == "token":
         open('config.py', 'w')
 
-# message 
+# message
 if action == "message" or action == "m":
 
-    if
+    if target.isnumeric() == True:
+        print("message" + " " + target)
+
+if action == "favorites":
+
+    if target == "list":
+        print ("favorites: list")
 
 
 

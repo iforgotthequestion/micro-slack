@@ -14,18 +14,18 @@
 
 
 -- Arguments:  (action) (target)
-	message (ms)
+	message (m)
 		group
 		-display "Messaging {group}:" User input message
 		user (im)
-	display (dis)
+	list (l)
 		channels
 		IMs
 		groups
 		unreads
 		recent
-	favorites (fav)
-		display (dis)
+	favorites (ff)
+		list
 			-list contents of favorites, message by selecting #
 
 		add

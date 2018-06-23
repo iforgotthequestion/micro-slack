@@ -17,10 +17,21 @@ target = args.target
 token = userToken # import token(s) from userToken.py
 sc = SlackClient(token) # Initialize slack API with token from config.py
 
-# install fresh
-if action == "install" and target == "new":
-    os.system('sh setup.sh')
-# user input for token
+# install
+if action == "install":
+
+    if target == "new": # fresh install
+        os.system('sh setup.sh')
+
+    if target == "token":
+        open('config.py', 'w')
+
+message 
+if action == "message" or action == "m":
+
+    if
+
+
 
 def getUserNames():
     users = sc.api_call("users.list", token=token)

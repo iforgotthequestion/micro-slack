@@ -21,3 +21,6 @@ Then, to install dependencies (pip modules: argparse, slackclient) run:
 `slack install token`
 
 If microslack isn't working (error or otherwise), you may need to regenerate your token and run `slack install token` again.
+
+
+**Using microslack**

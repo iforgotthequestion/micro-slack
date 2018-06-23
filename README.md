@@ -4,5 +4,5 @@ See todo.txt for outstanding work
 
 Install Dependencies:
 
-> Navigate to directory microslack is installed in.
-> run "python3 init.py setup new"
+Navigate to directory microslack is installed in and run
+> python3 init.py setup new

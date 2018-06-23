@@ -1,7 +1,7 @@
 See todo.txt for outstanding work
 
-Python 3.6
+Python 3.6 - Linux/OSX
 
-  Required modules:
-    argparse
-    slackclient
+Install Dependencies:
+
+  - navigate to 

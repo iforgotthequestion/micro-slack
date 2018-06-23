@@ -1,5 +1,8 @@
 -- Combine group directs with single directs and format
 
+-- Setup script:
+		exception handling
+
 -- write unreads functions
 -- write recents functions
 -- write favorites functions

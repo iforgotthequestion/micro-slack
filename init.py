@@ -6,8 +6,8 @@ from config import userToken
 # CLI argument parser, data, and options
 parser = argparse.ArgumentParser()
 # parser.add_argument("action", help="Action to execute")
-parser.add_argument("action", help = "message, fetch, disp, fav")
-parser.add_argument("target", help = "MESSAGE: group, user, \n DISPLAY: channels, im, groups, unreads, recent \n FAVORITES: display, add, remove, [name of favorite]\n SETUP")
+parser.add_argument("action", help = "message (m), display (d), favorites (f), setup (setup)")
+parser.add_argument("target", help = "MESSAGE: group, user, DISPLAY: channels, im, groups, unreads, recent FAVORITES: display, add, remove, [id of favorite], SETUP")
 
 args = parser.parse_args()
 message = args.target
@@ -170,11 +170,10 @@ def sendInstantTo(name, message):
 printChannels()
 printGroups()
 
-# pprint(getChannels())
+
 # printChannelHistory("CAWMBKPQT")
 
 
-# getChannels()
 
 ##### Body
 

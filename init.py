@@ -8,7 +8,7 @@ from config import userToken
 parser = argparse.ArgumentParser()
 # parser.add_argument("action", help="Action to execute")
 parser.add_argument("action", help = "message (m), list (l), favorites (f), install")
-parser.add_argument("target", help = "MESSAGE: group (g), user (u), DISPLAY: channels, im, groups, recent FAVORITES: list, add, remove, [id of favorite], INSTALL: new, token")
+parser.add_argument("target", help = "MESSAGE: group, user, LIST: all, channels, im, groups, recent FAVORITES: list, add, remove, [# of favorite] INSTALL: new, token")
 
 args = parser.parse_args()
 action = args.action
@@ -17,25 +17,6 @@ target = args.target
 token = userToken # import token(s) from userToken.py
 sc = SlackClient(token) # Initialize slack API with token from config.py
 
-# install
-if action == "install":
-
-    if target == "new": # fresh install
-        os.system('sh setup.sh')
-
-    if target == "token":
-        open('config.py', 'w')
-
-# message
-if action == "message" or action == "m":
-
-    if target.isnumeric() == True:
-        print("message" + " " + target)
-
-if action == "favorites":
-
-    if target == "list":
-        print ("favorites: list")
 
 
 
@@ -55,7 +36,6 @@ def getUserNames():
         i += 1
 
     return userList
-
 def getChannels():
     channels = sc.api_call("channels.list")
     channels = channels["channels"]
@@ -96,7 +76,7 @@ def getGroups():
         results[name] = id
 
     return results
-def getGroupDirects():
+def getDirects():
     groupsList = sc.api_call("groups.list")
     groups = groupsList["groups"]
 
@@ -117,8 +97,44 @@ def printChannels():
     print('<(*.*<)   Channels (public)  (>*.*)>\n')
 
     channelsList = getChannels()
+    i = 1
     for keys in channelsList:
-        print(keys)
+        print(str(i) + " " + keys)
+        i += 1
+    print('\n')
+def printGroups():
+    print ('\n')
+    print('<(*.*<)   Groups (private)   (>*.*)>\n')
+    i = 1
+    groupsList = getGroups()
+    for keys in groupsList:
+        if keys[0:4] != "mpdm":
+            print(str(i) + " " + keys)
+        i += 1
+
+    print ('\n')
+def printDirects():
+    print('\n')
+    print('<(*.*<)     Directs          (>*.*)>\n')
+
+    channelsList = getGroups()
+    for keys in channelsList:
+        i = 1
+        if keys[0:4] == "mpdm":
+            keys = keys[5:]
+            print(str(i) + ' ' + keys)
+
+    print ('\n')
+def printUsers():
+    print ('\n')
+    print('<(*.*<)      Users         (>*.*)>\n')
+    i = 1
+    userList = getUserNames()
+    for keys in userList:
+        print(str(i) + ' ' + keys)
+        i += 1
+    print('\n')
+
 def printChannelHistory(channel):
 
     print("*~.~*~.~*~.~*~.~*~.~*")
@@ -143,25 +159,6 @@ def printChannelHistory(channel):
         if len(userName) < nameSize:
             userName = userName + ((nameSize - len(userName)) * " ")
             print(userName + ":      " + text)
-def printGroups():
-    print ('\n')
-    print('<(*.*<)   Groups (private)   (>*.*)>\n')
-
-    channelsList = getGroups()
-    for keys in channelsList:
-        if keys[0:4] != "mpdm":
-            print(keys)
-
-    print ('\n')
-    print('<(*.*<)   Directs (private)  (>*.*)>\n')
-
-    channelsList = getGroups()
-    for keys in channelsList:
-        if keys[0:4] == "mpdm":
-            keys = keys[5:]
-            print(keys)
-
-    print ('\n')
 
 def sendInstant(channel, message):
     # send message (as user) to target ()
@@ -176,8 +173,62 @@ def sendInstantTo(name, message):
     # send message to channel
     sendInstant(channel, message)
 
-# printChannels()
-# printGroups()
+# install
+if action == "install":
+
+    if target == "new": # fresh install
+        os.system('sh setup.sh')
+
+    if target == "token":
+        tokenTemp = input('Enter the token for the workspace you wish to join: ')
+        tokenFile = open('config.py', 'w')
+        tokenFile.writelines("userToken=" + tokenTemp)
+        tokenFile.close()
+
+# list
+if action == "list" or action == "l":
+
+    if target == "group" or target == "g":
+        printGroups() # prints list of groups
+
+    if target == "direct" or target == "d":
+        printDirects() # prints list of direct messages
+
+    if target == "users" or target == "user" or target == "u":
+        printUsers() # prints list of users
+
+    if target == "channel" or target == "c":
+        printChannels() # prints list of channels
+
+# message
+if action == "message" or action == "m":
+
+    if target.isnumeric() == True:
+        print ("message " + target)
+
+    if target == "group" or target == "g":
+        print ("message: group")
+
+    if target == "user" or target == "u":
+        print ("message: user")
+
+    if target == "channel" or target == "c":
+        print ("message: channel")
+
+# favorites
+if action == "favorites" or "f":
+
+    if target == "list" or target == "l":
+        print ("favorites: list")
+
+    if target == "add" or target == "a":
+        print ("favorites: add")
+
+    if target == "remove" or target == "r":
+        print ("favorites: remove")
+
+    if target.isnumeric() == True:
+        print ("favorites " + target)
 
 
 

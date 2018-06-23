@@ -1,4 +1,4 @@
-See todo.txt for outstanding work
+**Under Construction**
 
 *Currently only handles a single workspace*
 
@@ -10,7 +10,7 @@ Python 3.6 - Linux/OSX
 
 Get started by creating a temporary alias in a terminal by running:
 
-`alias slack="python3 path/to/microslack/init.py"`
+`alias slack="python3 path/to/microslack/core.py"`
 
 Then, to install dependencies (pip modules: argparse, slackclient) run:
 

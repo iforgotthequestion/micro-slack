@@ -7,20 +7,20 @@ from config import userToken
 # CLI argument parser, data, and options
 parser = argparse.ArgumentParser()
 # parser.add_argument("action", help="Action to execute")
-parser.add_argument("action", help = "message (m), display (d), favorites (f), setup (setup)")
-parser.add_argument("target", help = "MESSAGE: group, user, DISPLAY: channels, im, groups, unreads, recent FAVORITES: display, add, remove, [id of favorite], SETUP")
+parser.add_argument("action", help = "message (m), display (d), favorites (f), install (install)")
+parser.add_argument("target", help = "MESSAGE: group, user, DISPLAY: channels, im, groups, unreads, recent FAVORITES: display, add, remove, [id of favorite], INSTALL: new, token")
 
 args = parser.parse_args()
 action = args.action
 target = args.target
 
-# import token(s) from userToken.py
-token = userToken
-#other token types to be added
+token = userToken # import token(s) from userToken.py
+sc = SlackClient(token) # Initialize slack API with token from config.py
 
-# Initialize slack API with token from config.py
-sc = SlackClient(token)
-
+# install fresh
+if action == "install" and target == "new":
+    os.system('sh setup.sh')
+# user input for token
 
 def getUserNames():
     users = sc.api_call("users.list", token=token)
@@ -159,11 +159,10 @@ def sendInstantTo(name, message):
     # send message to channel
     sendInstant(channel, message)
 
-printChannels()
-printGroups()
+# printChannels()
+# printGroups()
 
-if action == "install" and target == "new":
-    os.system('sh setup.sh')
+
 
 # printChannelHistory("CAWMBKPQT")
 

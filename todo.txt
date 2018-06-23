@@ -1,8 +1,9 @@
 -- Combine group directs with single directs and format
 
--- Setup script:
-		add user confirmation and explanation (will install modules via pip)
+-- setup.sh:
+		add user confirmation
 		exception handling
+
 
 -- write unreads functions
 -- write recents functions
@@ -10,7 +11,6 @@
 
 -- Combine "casual" and favorites (nickname option when added to favorites)
 
--- Store token in tokens.txt
 
 
 -- Arguments:  (action) (target)
@@ -35,10 +35,10 @@
 		remove (rm)
 			-show favorites list and choose by #
 			-confirm
-	setup
-		update
-		install
-		uninstall
+	install
+		new
+		token
+
 
 
 

@@ -26,7 +26,7 @@ if action == "install":
     if target == "token":
         open('config.py', 'w')
 
-message 
+# message 
 if action == "message" or action == "m":
 
     if

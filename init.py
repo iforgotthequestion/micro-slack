@@ -7,12 +7,14 @@ from config import userToken
 # CLI argument parser, data, and options
 parser = argparse.ArgumentParser()
 # parser.add_argument("action", help="Action to execute")
-parser.add_argument("action", help = "message (m), list (l), favorites (f), install")
+parser.add_argument("action", help = "message, list, favorites, install")
 parser.add_argument("target", help = "MESSAGE: group, user, LIST: all, channels, im, groups, recent FAVORITES: list, add, remove, [# of favorite] INSTALL: new, token")
 
 args = parser.parse_args()
 action = args.action
 target = args.target
+
+
 
 token = userToken # import token(s) from userToken.py
 sc = SlackClient(token) # Initialize slack API with token from config.py

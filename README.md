@@ -1,6 +1,5 @@
-**Under Construction**
-
-*Currently only handles a single workspace*
+**_Under Construction_**
+Present functionality limited to list and install
 
 **Operating Systems**
 

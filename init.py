@@ -1,8 +1,17 @@
 from slackclient import SlackClient
 from pprint import pprint # remove once built
-import argparse
-import os
-from config import userToken
+import argparse, os, sys
+
+try:
+    from config import userToken
+except:
+    print("\nNo user token found. Running: 'slack install token'\n")
+    tokenTemp = input('Enter the token for the workspace you wish to join: ')
+    tokenFile = open('config.py', 'w')
+    tokenFile.writelines("userToken=" + '"' + tokenTemp + '"')
+    tokenFile.close()
+    print("\nToken installed. Try running your command again\n")
+    sys.exit()
 
 # CLI argument parser, data, and options
 parser = argparse.ArgumentParser()
@@ -14,10 +23,7 @@ args = parser.parse_args()
 action = args.action
 target = args.target
 
-
-
-token = userToken # import token(s) from userToken.py
-sc = SlackClient(token) # Initialize slack API with token from config.py
+sc = SlackClient(userToken) # Initialize slack API with token from config.py
 
 
 
@@ -184,7 +190,7 @@ if action == "install":
     if target == "token":
         tokenTemp = input('Enter the token for the workspace you wish to join: ')
         tokenFile = open('config.py', 'w')
-        tokenFile.writelines("userToken=" + tokenTemp)
+        tokenFile.writelines("userToken=" + '"' + tokenTemp + '"')
         tokenFile.close()
 
 # list
@@ -231,7 +237,6 @@ if action == "favorites" or "f":
 
     if target.isnumeric() == True:
         print ("favorites " + target)
-
 
 
 # printChannelHistory("CAWMBKPQT")

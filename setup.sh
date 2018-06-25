@@ -1,15 +1,26 @@
 #  add confirmation and explanation of actions here
-echo "\n"
-echo "Installing microslack python dependencies via pip...\n"
+echo
+echo "This will install dependenceis for microslack.  Do you wish to continue? [y/n]"
+read reply
+echo    # (optional) move to a new line
+if [ $reply != "y" ]
+then
+  echo "Aborting microslack dependency install..."
+  exit 1
+fi
 
-echo "Running: sudo pip install argparse\n"
+echo "Installing microslack python dependencies via pip..."
+echo
+echo "Running: sudo pip install argparse"
+echo
 sudo pip3 install argparse
-echo "\n"
-echo " **argparse installed via pip**\n"
-
-echo "Running: sudo pip install slackclient\n"
+echo
+echo " **argparse installed via pip**"
+echo
+echo "Running: sudo pip install slackclient"
+echo
 sudo pip3 install slackclient
-echo "\n"
-echo " **slackclient installed via pip**\n"
-
-echo "Install script run for microslack python dependencies via pip. Check console output above to confirm successful install.\n"
+echo
+echo " **slackclient installed via pip**"
+echo
+echo "Install script run for microslack python dependencies via pip. Check prior console output to confirm successful install."

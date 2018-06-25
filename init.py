@@ -1,5 +1,6 @@
 from slackclient import SlackClient
 from pprint import pprint # remove once built
+from time import strftime, localtime
 import argparse, os, sys
 
 try:  # check for user token in config.py -- prompts for input if none found
@@ -16,8 +17,8 @@ except:
 # CLI argument parser, data, and options
 parser = argparse.ArgumentParser()
 # parser.add_argument("action", help="Action to execute")
-parser.add_argument("action", help = "message, list, favorites, install")
-parser.add_argument("target", help = "MESSAGE: group, user, LIST: all, channels, im, groups, recent FAVORITES: list, add, remove, [# of favorite] INSTALL: new, token")
+parser.add_argument("action", help = "message, list, favorites, setup")
+parser.add_argument("target", help = "MESSAGE: group, user, LIST: all, channels, im, groups, recent FAVORITES: list, add, remove, [# of favorite] SETUP: install, token")
 
 args = parser.parse_args()
 action = args.action
@@ -29,7 +30,6 @@ sc = SlackClient(userToken) # Initialize slack API with token from config.py
 def getUserNames():
     users = sc.api_call("users.list", token=userToken)
     members = users['members']
-
     userList = {}
 
     i = 0
@@ -37,6 +37,7 @@ def getUserNames():
         userData = members[i]
         name = userData['name']
         id = userData['id']
+        realName = userData['real_name']
         userList[name] = id
 
         i += 1
@@ -124,11 +125,13 @@ def printDirects():
     print('<(*.*<)     Directs          (>*.*)>\n')
 
     channelsList = getGroups()
+    i = 1
     for keys in channelsList:
-        i = 1
         if keys[0:4] == "mpdm":
             keys = keys[5:]
             print(str(i) + ' ' + keys)
+            i += 1
+
 
     print ('\n')
 def printUsers():
@@ -140,6 +143,10 @@ def printUsers():
         print(str(i) + ' ' + keys)
         i += 1
     print('\n')
+def printAll():
+    printChannels()
+    printGroups()
+    printDirects()
 
 def printChannelHistory(channel):
 
@@ -155,18 +162,20 @@ def printChannelHistory(channel):
     for i in messages:
         user = i['user']
         text = i['text']
-        time = i['ts']
-        print(time)
+        time = float(i['ts'])
         userName = ''
         for key in names:
             if names[key] == user:
                 userName = key
                 break
+        # print(strftime("%m/%d|%H:%M", localtime(time)) + " " + userName + ": " + text)
+
         if len(userName) > nameSize:
             userName = userName[0:nameSize - 1]
+            print(strftime("%m/%d|%H:%M", localtime(time)) + " " + userName + ": " + text)
         if len(userName) < nameSize:
             userName = userName + ((nameSize - len(userName)) * " ")
-            print(userName + ":      " + text)
+            print(strftime("%m/%d|%H:%M", localtime(time)) + " " + userName + ": " + text)
 
 def sendInstant(channel, message):
     # send message (as user) to target ()
@@ -181,10 +190,10 @@ def sendInstantTo(name, message):
     # send message to channel
     sendInstant(channel, message)
 
-if action == "install":
+if action == "setup":
 
-    if target == "new": # fresh install
-        os.system('sh setup.sh')
+    if target == "install": # fresh install
+        os.system('bash setup.sh')
 
     if target == "token":
         tokenTemp = input('Enter the token for the workspace you wish to join: ')
@@ -234,7 +243,10 @@ if action == "favorites" or "f":
     if target.isnumeric() == True:
         print ("favorites " + target)
 
-printChannelHistory("CAWMBKPQT")
+
+# printAll()
+# printChannelHistory("CAWMBKPQT")
+# pprint(getUserNames())
 
 # Is known user?
 # try:

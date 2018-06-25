@@ -4,7 +4,7 @@ Present functionality limited to list and install
 
 **Operating Systems**
 
-Python 3.6 - Linux/OSX
+Python 3.6  - Ubuntu 16.04+ (?)
 
 **Setup**
 

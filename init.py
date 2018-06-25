@@ -26,7 +26,6 @@ target = args.target
 
 sc = SlackClient(userToken) # Initialize slack API with token from config.py
 
-
 def getUserNames():
     users = sc.api_call("users.list", token=userToken)
     members = users['members']
@@ -157,7 +156,7 @@ def printChannelHistory(channel):
     names = getUserNames()
     history = getChannelHistory(channel)
     messages = history['messages']
-    nameSize = 14
+    nameSize = 10
 
     for i in messages:
         user = i['user']
@@ -168,7 +167,6 @@ def printChannelHistory(channel):
             if names[key] == user:
                 userName = key
                 break
-        # print(strftime("%m/%d|%H:%M", localtime(time)) + " " + userName + ": " + text)
 
         if len(userName) > nameSize:
             userName = userName[0:nameSize - 1]
@@ -243,9 +241,8 @@ if action == "favorites" or "f":
     if target.isnumeric() == True:
         print ("favorites " + target)
 
-
 # printAll()
-# printChannelHistory("CAWMBKPQT")
+printChannelHistory("CAWMBKPQT")
 # pprint(getUserNames())
 
 # Is known user?

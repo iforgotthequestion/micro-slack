@@ -3,9 +3,10 @@ echo
 echo "This will install dependenceis for microslack.  Do you wish to continue? [y/n]"
 read reply
 echo    # (optional) move to a new line
-if [ $reply != "y" ]
+if [[ $reply != "y" ]]
 then
-  echo "Aborting microslack dependency install..."
+  echo "Aborted microslack dependency install..."
+  echo
   exit 1
 fi
 

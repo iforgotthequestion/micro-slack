@@ -1,8 +1,10 @@
+	Functions
+-- build classes in outside file
+
 	Tokens
 -- Multiple workspace functionality via multiple tokens
 
- 	Setup.sh:
---	exception handling
+ 	Setup:
 --  write uninstall scripts
 --  scheduling setup script
 
@@ -16,10 +18,14 @@
 	>>> time.strftime("%m-%d %H:%M", time.localtime(1527393868.000064))
 
 
-	Listing
--- Formatting
+	Channel
+-- Formatting of user names
+
+	Favorites
 -- write favorites functions
 
+
+ARGS
 	message
 		group, user
 	list
@@ -34,7 +40,7 @@
 		remove
 		list
 
-	install >> setup
-		new >> install
+ setup
+		install
 		token
-		refresh
+		auto

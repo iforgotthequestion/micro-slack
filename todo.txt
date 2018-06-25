@@ -1,21 +1,23 @@
 	Tokens
--- fix token install
 -- Multiple workspace functionality via multiple tokens
 
  	Setup.sh:
 --  add user confirmation
 --	exception handling
+--  write uninstall scripts
 
   Scheduling
--- write message fetch script
--- cron scheduling:
+--  write message fetch script
+--  cron scheduling:
 		- setup
 
 	Messaging
 -- Finish date/time formatting for messages
-	>>> time.strftime("%m-%d %H:%M", time.localtime(1527393868.000064))			
+	>>> time.strftime("%m-%d %H:%M", time.localtime(1527393868.000064))
 
--- write recents functions
+
+	Listing
+-- Formatting
 -- write favorites functions
 
 	message

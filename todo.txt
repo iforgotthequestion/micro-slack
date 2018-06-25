@@ -13,7 +13,7 @@
 
 	Messaging
 -- Finish date/time formatting for messages
-	>>> time.strftime("%m-%d %H:%M", time.localtime(1527393868.000064))
+	>>> time.strftime("%m-%d %H:%M", time.localtime(1527393868.000064))			
 
 -- write recents functions
 -- write favorites functions

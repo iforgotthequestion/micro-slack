@@ -1,52 +1,38 @@
--- Combine group directs with single directs and format
-
 	Tokens
 -- fix token install
 -- Multiple workspace functionality via multiple tokens
 
--- setup.sh:
-		add user confirmation
-		exception handling
+ 	Setup.sh:
+--  add user confirmation
+--	exception handling
 
+  Scheduling
+-- write message fetch script
+-- cron scheduling:
+		- setup
 
--- write unreads functions
+	Messaging
+-- Finish date/time formatting for messages
+	>>> time.strftime("%m-%d %H:%M", time.localtime(1527393868.000064))
+
 -- write recents functions
 -- write favorites functions
 
--- Combine "casual" and favorites (nickname option when added to favorites)
-
-
-
-
--- Arguments:  (action) (target)
-	message (m)
-		group
-		-display "Messaging {group}:" User input message
-		user (im)
-	list (l)
+	message
+		group, user
+	list
+		all
 		channels
-		IMs
+		im
 		groups
-		unreads
 		recent
-	favorites (ff)
-		list
-			-list contents of favorites, message by selecting #
 
+	favorite
 		add
-			-display lists of users, channels, groups, choose with #,
-			-user selects, is added to favorites list (assign by conversation ID)
+		remove
+		list
 
-		remove (rm)
-			-show favorites list and choose by #
-			-confirm
-	install
-		new
+	install >> setup
+		new >> install
 		token
-
-
-
-
-	*** Nice to haves***
-
-	"Last" feature
+		refresh

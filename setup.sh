@@ -12,4 +12,4 @@ sudo pip3 install slackclient
 echo "\n"
 echo " **slackclient installed via pip**\n"
 
-echo "Installed microslack python dependencies via pip.\n"
+echo "Install script run for microslack python dependencies via pip. Check console output above to confirm successful install.\n"

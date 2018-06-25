@@ -2,7 +2,7 @@ from slackclient import SlackClient
 from pprint import pprint # remove once built
 import argparse, os, sys
 
-try:
+try:  # check for user token in config.py -- prompts for input if none found
     from config import userToken
 except:
     print("\nNo user token found. Running: 'slack install token'\n")
@@ -26,10 +26,8 @@ target = args.target
 sc = SlackClient(userToken) # Initialize slack API with token from config.py
 
 
-
-
 def getUserNames():
-    users = sc.api_call("users.list", token=token)
+    users = sc.api_call("users.list", token=userToken)
     members = users['members']
 
     userList = {}
@@ -157,6 +155,8 @@ def printChannelHistory(channel):
     for i in messages:
         user = i['user']
         text = i['text']
+        time = i['ts']
+        print(time)
         userName = ''
         for key in names:
             if names[key] == user:
@@ -181,7 +181,6 @@ def sendInstantTo(name, message):
     # send message to channel
     sendInstant(channel, message)
 
-# install
 if action == "install":
 
     if target == "new": # fresh install
@@ -193,7 +192,6 @@ if action == "install":
         tokenFile.writelines("userToken=" + '"' + tokenTemp + '"')
         tokenFile.close()
 
-# list
 if action == "list" or action == "l":
 
     if target == "group" or target == "g":
@@ -208,7 +206,6 @@ if action == "list" or action == "l":
     if target == "channel" or target == "c":
         printChannels() # prints list of channels
 
-# message
 if action == "message" or action == "m":
 
     if target.isnumeric() == True:
@@ -223,7 +220,6 @@ if action == "message" or action == "m":
     if target == "channel" or target == "c":
         print ("message: channel")
 
-# favorites
 if action == "favorites" or "f":
 
     if target == "list" or target == "l":
@@ -238,8 +234,7 @@ if action == "favorites" or "f":
     if target.isnumeric() == True:
         print ("favorites " + target)
 
-
-# printChannelHistory("CAWMBKPQT")
+printChannelHistory("CAWMBKPQT")
 
 # Is known user?
 # try:

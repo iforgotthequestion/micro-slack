@@ -14,13 +14,13 @@ echo "Installing microslack python dependencies via pip..."
 echo
 echo "Running: sudo pip install argparse"
 echo
-sudo pip3 install argparse
+sudo pip install argparse
 echo
 echo " **argparse installed via pip**"
 echo
 echo "Running: sudo pip install slackclient"
 echo
-sudo pip3 install slackclient
+sudo pip install slackclient
 echo
 echo " **slackclient installed via pip**"
 echo

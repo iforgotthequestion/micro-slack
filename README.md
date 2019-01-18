@@ -4,13 +4,13 @@ Present functionality limited to list and install
 
 **Operating Systems**
 
-Python 3.6  - Ubuntu 16.04+ (?)
+Python 3.7  - Ubuntu 16.04+ (?)
 
 **Setup**
 
 Create a temporary alias in a terminal by running:
 
-**$** `alias slack="python3 path/to/microslack/core.py"`
+**$** `alias slack="python3 path_to_microslack/init.py"`
 
 You will likely wish to make this permanent (add to .bashrc, or wherever you store your aliases).
 
